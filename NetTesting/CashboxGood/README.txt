@@ -1,6 +1,6 @@
-﻿This project is an example of BAD code!
+﻿This project is an example of testable and maintainable code.
 
-It is hard to maintain and improve such code, it is impossible to test it. And yes, it contains mistakes.
+Yes, it contains logic mistakes.
 
 How to prepare and run application:
 1. Run application once. Nuget will restore all packages and an empty test database "Cashbox.DataAccess.CashboxDbContext"
