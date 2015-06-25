@@ -2,7 +2,7 @@
 
 namespace Cashbox.Models
 {
-    internal class Product : IEntity
+    public class Product : IEntity
     {
         public int Id { get; set; }
 

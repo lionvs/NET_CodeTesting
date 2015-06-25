@@ -33,7 +33,6 @@ namespace Cashbox
             {
                 var account = (Account)UxAccounts.SelectedItem;
                 context.Accounts.Attach(account);
-                context.Entry(account).Collection(x => x.Orders).Load();
                 UxOrders.ItemsSource = account.Orders;
             }
         }
@@ -61,6 +60,9 @@ namespace Cashbox
 
         private void UxPurchase_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            if (UxAccounts.SelectedItem == null)
+                return;
+
             using (var context = new CashboxDbContext())
             {
                 var account = (Account)UxAccounts.SelectedItem;

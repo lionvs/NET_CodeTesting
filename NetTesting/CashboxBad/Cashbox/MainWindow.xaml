@@ -47,6 +47,7 @@
     <!--  Account Orders History  -->
     <Expander Grid.Row="3" Header="Account Orders History">
       <DataGrid x:Name="UxOrders"
+                Margin="5"
                 AutoGenerateColumns="False"
                 IsReadOnly="True"
                 SelectionMode="Single">

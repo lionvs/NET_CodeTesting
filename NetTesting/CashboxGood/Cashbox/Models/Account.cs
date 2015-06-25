@@ -3,7 +3,7 @@ using Cashbox.DataAccess;
 
 namespace Cashbox.Models
 {
-    internal class Account : IEntity
+    public class Account : IEntity
     {
         public int Id { get; set; }
 

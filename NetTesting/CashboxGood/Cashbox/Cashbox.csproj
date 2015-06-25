@@ -47,6 +47,11 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -75,8 +80,14 @@
     <Compile Include="DataAccess\CashboxDbContext.cs" />
     <Compile Include="DataAccess\IEntity.cs" />
     <Compile Include="DataAccess\IRepository.cs" />
-    <Compile Include="DataAccess\DbRepository.cs" />
+    <Compile Include="DataAccess\IUnitOfWorkFactory.cs" />
+    <Compile Include="DataAccess\Repository.cs" />
+    <Compile Include="DataAccess\IUnitOfWork.cs" />
+    <Compile Include="DataAccess\UnitOfWork.cs" />
+    <Compile Include="DataAccess\UnitOfWorkFactory.cs" />
     <Compile Include="Framework\DelegateCommand.cs" />
+    <Compile Include="Services\DataLoadingService.cs" />
+    <Compile Include="Services\IDataLoadingService.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="Framework\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

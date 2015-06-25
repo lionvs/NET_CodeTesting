@@ -2,7 +2,7 @@
 
 namespace Cashbox.Models
 {
-    internal class Account
+    public class Account
     {
         public int Id { get; set; }
 

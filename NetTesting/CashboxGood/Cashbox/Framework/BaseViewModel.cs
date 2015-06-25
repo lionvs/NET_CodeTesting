@@ -11,7 +11,7 @@ namespace Cashbox.Framework
 
         protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
-            if (storage.Equals(value))
+            if (Equals(storage, value))
                 return false;
 
             storage = value;

@@ -1,23 +1,22 @@
 using System;
-using Cashbox.Framework;
+using Cashbox.Models;
 
 namespace Cashbox.ViewModels
 {
-    internal class OrderViewModel : BaseViewModel
+    internal class OrderViewModel
     {
-        private DateTime _date;
-        private decimal _total;
-
-        public DateTime Date
+        public OrderViewModel(Order order)
         {
-            get { return _date; }
-            set { SetProperty(ref _date, value); }
+            Date = order.Date;
+            Total = order.Total;
         }
 
-        public decimal Total
+        public OrderViewModel()
         {
-            get { return _total; }
-            set { SetProperty(ref _total, value); }
         }
+
+        public DateTime Date { get; set; }
+
+        public decimal Total { get; set; }
     }
 }

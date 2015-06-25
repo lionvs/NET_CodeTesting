@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
 namespace Cashbox.DataAccess
 {
-    internal class DbRepository<T> : IRepository<T> where T : class, IEntity
+    internal class Repository<T> : IRepository<T> where T : class, IEntity
     {
         protected readonly DbContext DataContext;
         protected readonly DbSet<T> DataSet;
 
-        public DbRepository(DbContext dataContext)
+        public Repository(DbContext dataContext)
         {
             DataContext = dataContext;
             DataSet = dataContext.Set<T>();
@@ -18,6 +19,11 @@ namespace Cashbox.DataAccess
         public IQueryable<T> Query()
         {
             return DataSet;
+        }
+
+        public IEnumerable<T> All()
+        {
+            return DataSet.ToList();
         }
 
         public T Get(int id)
@@ -35,7 +41,7 @@ namespace Cashbox.DataAccess
             DataSet.Add(entity);
         }
 
-        public void Update(T entity)
+        public void Attach(T entity)
         {
             DataSet.Attach(entity);
         }

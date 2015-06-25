@@ -1,24 +1,29 @@
 ﻿using Cashbox.Framework;
+using Cashbox.Models;
 
 namespace Cashbox.ViewModels
 {
     internal class ProductViewModel : BaseViewModel
     {
-        private string _title;
-        private decimal _price;
         private int _amount;
 
-        public string Title
+        public ProductViewModel(Product product)
         {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
+            Id = product.Id;
+            Title = product.Title;
+            Price = product.Price;
+            _amount = product.Amount;
         }
 
-        public decimal Price
+        public ProductViewModel()
         {
-            get { return _price; }
-            set { SetProperty(ref _price, value); }
         }
+
+        public int Id { get; set; }
+
+        public string Title { get; set; }
+
+        public decimal Price { get; set; }
 
         public int Amount
         {

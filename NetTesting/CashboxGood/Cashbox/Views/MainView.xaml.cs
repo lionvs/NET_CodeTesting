@@ -4,6 +4,8 @@ using System.Linq;
 using System.Windows.Controls;
 using Cashbox.DataAccess;
 using Cashbox.Models;
+using Cashbox.Services;
+using Cashbox.ViewModels;
 
 namespace Cashbox.Views
 {
@@ -15,27 +17,12 @@ namespace Cashbox.Views
         public MainView()
         {
             InitializeComponent();
-        }
 
-        private void Window_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            refreshView();
-        }
+            // It would be much better to use IoC container here.
+            var unitOfWorkFactory = new UnitOfWorkFactory();
+            var service = new DataLoadingService(unitOfWorkFactory);
 
-        private void UxAccounts_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (UxAccounts.SelectedItem == null)
-                return;
-
-            UxError.Text = string.Empty;
-
-            using (var context = new CashboxDbContext())
-            {
-                var account = (Account)UxAccounts.SelectedItem;
-                context.Accounts.Attach(account);
-                context.Entry(account).Collection(x => x.Orders).Load();
-                UxOrders.ItemsSource = account.Orders;
-            }
+            DataContext = new MainViewModel(service);
         }
 
         private void UxProducts_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -89,26 +76,11 @@ namespace Cashbox.Views
                     }
 
                     context.SaveChanges();
-                    refreshView();
                 }
                 else
                 {
                     UxError.Text = "Not enough money!";
                 }
-            }
-        }
-
-        private void refreshView()
-        {
-            UxError.Text = string.Empty;
-
-            using (var context = new CashboxDbContext())
-            {
-                var accounts = context.Accounts.ToList();
-                UxAccounts.ItemsSource = accounts;
-
-                var products = context.Products.ToList();
-                UxProducts.ItemsSource = products;
             }
         }
 
