@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Cashbox.DataAccess.Models
+namespace Cashbox.Models
 {
     internal class Account
     {

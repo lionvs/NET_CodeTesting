@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity;
-using Cashbox.DataAccess.Models;
+using Cashbox.Models;
 
 namespace Cashbox.DataAccess
 {

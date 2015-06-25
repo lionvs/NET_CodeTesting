@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using Cashbox.DataAccess;
-using Cashbox.DataAccess.Models;
+using Cashbox.Models;
 
-namespace Cashbox
+namespace Cashbox.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainView.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class MainView
     {
-        public MainWindow()
+        public MainView()
         {
             InitializeComponent();
         }

@@ -64,7 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -73,15 +73,24 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataAccess\CashboxDbContext.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="DataAccess\IEntity.cs" />
+    <Compile Include="DataAccess\IRepository.cs" />
+    <Compile Include="DataAccess\DbRepository.cs" />
+    <Compile Include="Framework\DelegateCommand.cs" />
+    <Compile Include="ViewModels\AccountViewModel.cs" />
+    <Compile Include="Framework\BaseViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\OrderViewModel.cs" />
+    <Compile Include="ViewModels\ProductViewModel.cs" />
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess\Models\Account.cs" />
-    <Compile Include="DataAccess\Models\Order.cs" />
-    <Compile Include="DataAccess\Models\Product.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Migrations\201506241246491_InitialCreate.cs" />
     <Compile Include="Migrations\201506241246491_InitialCreate.Designer.cs">
       <DependentUpon>201506241246491_InitialCreate.cs</DependentUpon>
@@ -122,6 +131,7 @@
       <Link>README.txt</Link>
     </Resource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

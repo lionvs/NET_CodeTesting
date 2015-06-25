@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Cashbox.DataAccess;
 
-namespace Cashbox.DataAccess.Models
+namespace Cashbox.Models
 {
-    internal class Account
+    internal class Account : IEntity
     {
         public int Id { get; set; }
 

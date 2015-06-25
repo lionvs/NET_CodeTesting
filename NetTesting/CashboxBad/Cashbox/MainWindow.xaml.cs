@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using Cashbox.DataAccess;
-using Cashbox.DataAccess.Models;
+using Cashbox.Models;
 
 namespace Cashbox
 {

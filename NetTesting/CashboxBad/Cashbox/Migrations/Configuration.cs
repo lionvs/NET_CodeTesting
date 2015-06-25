@@ -1,6 +1,6 @@
 using System.Data.Entity.Migrations;
 using Cashbox.DataAccess;
-using Cashbox.DataAccess.Models;
+using Cashbox.Models;
 
 namespace Cashbox.Migrations
 {

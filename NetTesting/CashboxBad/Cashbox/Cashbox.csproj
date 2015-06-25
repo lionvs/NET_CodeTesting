@@ -79,9 +79,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess\Models\Account.cs" />
-    <Compile Include="DataAccess\Models\Order.cs" />
-    <Compile Include="DataAccess\Models\Product.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Migrations\201506241246491_InitialCreate.cs" />
     <Compile Include="Migrations\201506241246491_InitialCreate.Designer.cs">
       <DependentUpon>201506241246491_InitialCreate.cs</DependentUpon>

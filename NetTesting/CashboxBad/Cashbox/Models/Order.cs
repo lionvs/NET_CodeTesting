@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cashbox.DataAccess.Models
+namespace Cashbox.Models
 {
     internal class Order
     {

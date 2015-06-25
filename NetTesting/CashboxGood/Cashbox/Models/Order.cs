@@ -1,8 +1,9 @@
 ﻿using System;
+using Cashbox.DataAccess;
 
-namespace Cashbox.DataAccess.Models
+namespace Cashbox.Models
 {
-    internal class Order
+    internal class Order : IEntity
     {
         public int Id { get; set; }
 
