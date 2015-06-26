@@ -93,6 +93,37 @@ namespace Cashbox.Tests.Services
             Assert.Throws<PurchaseException>(() => service.Purchase(1, Enumerable.Empty<int>(), 20m));
         }
 
+        // Example of behavior test that checks that specific method was called.
+        [Test]
+        public void Purchase_When_purchase_products_Then_SaveChanges_of_UnitOfWork_called()
+        {
+            // Arrange
+            var product1 = new Product { Id = 1, Price = 1, Amount = 1 };
+
+            var productRepository = A.Fake<IRepository<Product>>();
+            A.CallTo(() => productRepository.Query()).Returns(new[] { product1 }.AsQueryable());
+
+            var account = new Account { Id = 1, Balance = 1 };
+
+            var accountRepository = A.Fake<IRepository<Account>>();
+            A.CallTo(() => accountRepository.Get(A<int>._)).Returns(account);
+
+            var unitOfWork = A.Fake<IUnitOfWork>();
+            A.CallTo(() => unitOfWork.Repository<Product>()).Returns(productRepository);
+            A.CallTo(() => unitOfWork.Repository<Account>()).Returns(accountRepository);
+
+            var unitOfWorkFactory = A.Fake<IUnitOfWorkFactory>();
+            A.CallTo(() => unitOfWorkFactory.Create()).Returns(unitOfWork);
+
+            var service = new PurchaseService(unitOfWorkFactory);
+
+            // Act
+            service.Purchase(account.Id, new[] { product1.Id }, product1.Price);
+
+            // Assert
+            A.CallTo(() => unitOfWork.SaveChanges()).MustHaveHappened(Repeated.Exactly.Once);
+        }
+
         // TODO: Write test to check that account balance is correctly updated after purchase.
 
         // TODO: Write test to check that account can't buy product if it's amount is 0. Purchase should throw an exception.
