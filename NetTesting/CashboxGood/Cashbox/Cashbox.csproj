@@ -50,7 +50,7 @@
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -88,8 +88,13 @@
     <Compile Include="Framework\DelegateCommand.cs" />
     <Compile Include="Services\DataLoadingService.cs" />
     <Compile Include="Services\IDataLoadingService.cs" />
+    <Compile Include="Services\IPurchaseService.cs" />
+    <Compile Include="Services\PurchaseError.cs" />
+    <Compile Include="Services\PurchaseException.cs" />
+    <Compile Include="Services\PurchaseService.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="Framework\BaseViewModel.cs" />
+    <Compile Include="ViewModels\DecimalToPercentConverter.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />

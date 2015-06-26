@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using Cashbox.Framework;
 using Cashbox.Services;
@@ -9,25 +11,28 @@ namespace Cashbox.ViewModels
     internal class MainViewModel : BaseViewModel
     {
         private readonly IDataLoadingService _dataLoadingService;
+        private readonly IPurchaseService _purchaseService;
 
         private ObservableCollection<AccountViewModel> _accounts;
         private ObservableCollection<OrderViewModel> _ordersHistory;
         private ObservableCollection<ProductViewModel> _products;
+        private ObservableCollection<ProductViewModel> _selectedProducts;
         private decimal _total;
         private decimal _discount;
         private decimal _totalAfterDiscount;
         private string _errorMessage;
         private AccountViewModel _selectedAccount;
 
-        public MainViewModel(IDataLoadingService dataLoadingService)
+        public MainViewModel(IDataLoadingService dataLoadingService, IPurchaseService purchaseService)
         {
             _dataLoadingService = dataLoadingService;
+            _purchaseService = purchaseService;
 
             LoadAccountsCommand = new DelegateCommand(loadAccounts);
             LoadOrdersHistoryCommand = new DelegateCommand(loadOrdersHistory, canLoadOrdersHistory);
             LoadProductsCommand = new DelegateCommand(loadProducts);
-
-            PropertyChanged += onPropertyChanged;
+            CalculateTotalsCommand = new DelegateCommand(calculateTotals, canCalculateTotals);
+            PurchaseCommand = new DelegateCommand(purchase, canPurchase);
         }
 
         public ObservableCollection<AccountViewModel> Accounts
@@ -46,6 +51,12 @@ namespace Cashbox.ViewModels
         {
             get { return _products; }
             set { SetProperty(ref _products, value); }
+        }
+
+        public ObservableCollection<ProductViewModel> SelectedProducts
+        {
+            get { return _selectedProducts; }
+            set { SetProperty(ref _selectedProducts, value); }
         }
 
         public decimal Total
@@ -78,22 +89,20 @@ namespace Cashbox.ViewModels
             set { SetProperty(ref _selectedAccount, value); }
         }
 
-        public ICommand PurchaseCommand { get; private set; }
-
-        #region LoadAccountsCommand
-
         public ICommand LoadAccountsCommand { get; private set; }
+
+        public ICommand LoadOrdersHistoryCommand { get; private set; }
+
+        public ICommand LoadProductsCommand { get; private set; }
+
+        public ICommand CalculateTotalsCommand { get; private set; }
+
+        public ICommand PurchaseCommand { get; private set; }
 
         private void loadAccounts(object parameter)
         {
             Accounts = new ObservableCollection<AccountViewModel>(_dataLoadingService.GetAccounts());
         }
-
-        #endregion
-
-        #region LoadOrdersHistoryCommand
-
-        public ICommand LoadOrdersHistoryCommand { get; private set; }
 
         private void loadOrdersHistory(object parameter)
         {
@@ -106,26 +115,51 @@ namespace Cashbox.ViewModels
             return SelectedAccount != null;
         }
 
-        #endregion
-
-        #region LoadProductsCommand
-
-        public ICommand LoadProductsCommand { get; private set; }
-
         private void loadProducts(object parameter)
         {
             Products = new ObservableCollection<ProductViewModel>(_dataLoadingService.GetProducts());
         }
 
-        #endregion
-
-        private void onPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void calculateTotals(object parameter)
         {
-            // Reset Error Message if any property changed (except Error Message itself).
-            if (e.PropertyName != PropertyName(() => ErrorMessage))
+            var selectedProducts = ((IEnumerable<object>)parameter).Cast<ProductViewModel>();
+
+            Total = _purchaseService.GetProductsTotal(selectedProducts);
+            Discount = _purchaseService.GetDiscount(SelectedAccount.Id, Total);
+            TotalAfterDiscount = _purchaseService.GetTotalAfterDiscount(Total, Discount);
+        }
+
+        private bool canCalculateTotals(object parameter)
+        {
+            return SelectedAccount != null && parameter != null;
+        }
+
+        private void purchase(object parameter)
+        {
+            ErrorMessage = null;
+
+            var accountId = SelectedAccount.Id;
+            var selectedProducts = ((IEnumerable<object>)parameter).Cast<ProductViewModel>();
+
+            try
             {
-                ErrorMessage = null;
+                _purchaseService.Purchase(accountId, selectedProducts);
             }
+            catch (PurchaseException ex)
+            {
+                ErrorMessage = ex.Message;
+            }
+
+            LoadAccountsCommand.Execute(null);
+            SelectedAccount = Accounts.Single(x => x.Id == accountId);
+            
+            LoadOrdersHistoryCommand.Execute(null);
+            LoadProductsCommand.Execute(null);
+        }
+
+        private bool canPurchase(object parameter)
+        {
+            return SelectedAccount != null && parameter != null && ((IEnumerable<object>)parameter).Any();
         }
     }
 }

@@ -8,7 +8,21 @@ namespace Cashbox.Framework
         private readonly Action<object> _execute;
         private readonly Predicate<object> _canExecute;
 
-        public event EventHandler CanExecuteChanged;
+        private event EventHandler internalCanExecuteChanged;
+
+        public event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                internalCanExecuteChanged += value;
+                CommandManager.RequerySuggested += value;
+            }
+            remove
+            {
+                internalCanExecuteChanged -= value;
+                CommandManager.RequerySuggested -= value;
+            }
+        }
 
         public DelegateCommand(Action<object> execute, Predicate<object> canExecute)
         {
@@ -30,9 +44,17 @@ namespace Cashbox.Framework
             return _canExecute == null || _canExecute(parameter);
         }
 
-        protected virtual void RaiseCanExecuteChanged()
+        public void RaiseCanExecuteChanged()
         {
-            var handler = CanExecuteChanged;
+            if (_canExecute != null)
+            {
+                OnCanExecuteChanged();
+            }
+        }
+
+        protected virtual void OnCanExecuteChanged()
+        {
+            var handler = internalCanExecuteChanged;
             if (handler != null) handler(this, EventArgs.Empty);
         }
     }

@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:m="clr-namespace:Cashbox.Models"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:Cashbox.ViewModels"
         Title="Cashbox"
@@ -11,6 +10,9 @@
         Height="600"
         d:DataContext="{d:DesignInstance vm:MainViewModel}"
         mc:Ignorable="d">
+  <Window.Resources>
+    <vm:DecimalToPercentConverter x:Key="DecimalToPercentConverter" />
+  </Window.Resources>
   <Grid Margin="10">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -110,6 +112,11 @@
                             Header="Amount"
                             d:DataContext="{d:DesignInstance vm:ProductViewModel}" />
       </DataGrid.Columns>
+      <i:Interaction.Triggers>
+        <i:EventTrigger EventName="SelectionChanged">
+          <i:InvokeCommandAction Command="{Binding CalculateTotalsCommand}" CommandParameter="{Binding SelectedItems, ElementName=UxProducts}" />
+        </i:EventTrigger>
+      </i:Interaction.Triggers>
     </DataGrid>
 
     <!--  Total  -->
@@ -131,10 +138,10 @@
                  HorizontalAlignment="Right">
         Total:
       </TextBlock>
-      <TextBlock x:Name="UxTotal"
-                 Grid.Row="0"
+      <TextBlock Grid.Row="0"
                  Grid.Column="2"
-                 HorizontalAlignment="Right" />
+                 HorizontalAlignment="Right"
+                 Text="{Binding Total}" />
 
       <!--  Discount  -->
       <TextBlock Grid.Row="1"
@@ -142,10 +149,11 @@
                  HorizontalAlignment="Right">
         Discount:
       </TextBlock>
-      <TextBlock x:Name="UxDiscount"
-                 Grid.Row="1"
+      <TextBlock Grid.Row="1"
                  Grid.Column="2"
-                 HorizontalAlignment="Right" />
+                 HorizontalAlignment="Right"
+                 Text="{Binding Discount,
+                                Converter={StaticResource DecimalToPercentConverter}}" />
 
       <!--  Total after discount  -->
       <TextBlock Grid.Row="2"
@@ -153,24 +161,26 @@
                  HorizontalAlignment="Right">
         Total after discount:
       </TextBlock>
-      <TextBlock x:Name="UxTotalAfterDiscount"
-                 Grid.Row="2"
+      <TextBlock Grid.Row="2"
                  Grid.Column="2"
-                 HorizontalAlignment="Right" />
+                 HorizontalAlignment="Right"
+                 Text="{Binding TotalAfterDiscount}" />
     </Grid>
 
     <!--  Purchase  -->
-    <Button x:Name="UxPurchase"
-            Grid.Row="10"
+    <Button Grid.Row="10"
             HorizontalAlignment="Right"
+            Command="{Binding PurchaseCommand}"
+            CommandParameter="{Binding SelectedItems,
+                                       ElementName=UxProducts}"
             Padding="8,3">
       Purchase
     </Button>
 
     <!--  Error  -->
-    <TextBlock x:Name="UxError"
-               Grid.Row="12"
+    <TextBlock Grid.Row="12"
                HorizontalAlignment="Right"
-               Foreground="Red" />
+               Foreground="Red"
+               Text="{Binding ErrorMessage}" />
   </Grid>
 </Window>
