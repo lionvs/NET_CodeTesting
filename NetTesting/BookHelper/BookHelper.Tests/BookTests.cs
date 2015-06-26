@@ -5,6 +5,8 @@ namespace BookHelper.Tests
     [TestFixture]
     public class BookTests
     {
+        https://www.youtube.com/watch?v=E4iMA-oh94s
+
         [Test]
         public void HowManyPagesLeft_When_given_few_read_ranges_Then_returns_correct_count_of_unread_pages()
         {
