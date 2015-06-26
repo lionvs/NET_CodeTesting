@@ -11,6 +11,11 @@ namespace Cashbox.Services
     {
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
+        public const decimal ORDERS_HISTORY_DISCOUNT = 0.1m; // 10%
+        public const decimal ORDERS_HISTORY_DISCOUNT_THRESHOLD = 500m;
+        public const decimal EXPENSIVE_PRODUCTS_DISCOUNT = 0.05m; // 5%
+        public const decimal EXPENSIVE_PRODUCTS_DISCOUNT_THRESHOLD = 200m;
+
         public PurchaseService(IUnitOfWorkFactory unitOfWorkFactory)
         {
             _unitOfWorkFactory = unitOfWorkFactory;
@@ -43,15 +48,15 @@ namespace Cashbox.Services
 
             // If account has orders history with sum total >= 500 then give 10% discount.
             var ordersHistoryTotal = GetOrdersHistoryTotal(accountId);
-            if (ordersHistoryTotal >= 500)
+            if (ordersHistoryTotal >= ORDERS_HISTORY_DISCOUNT_THRESHOLD)
             {
-                discount += 0.1m;
+                discount += ORDERS_HISTORY_DISCOUNT;
             }
 
             // If the new order has total >= 200 then give an additional 5% discount.
-            if (productsTotal >= 200)
+            if (productsTotal >= EXPENSIVE_PRODUCTS_DISCOUNT_THRESHOLD)
             {
-                discount += 0.05m;
+                discount += EXPENSIVE_PRODUCTS_DISCOUNT;
             }
 
             return discount;
@@ -62,25 +67,18 @@ namespace Cashbox.Services
             return Math.Round(total * (1 - discount), 2);
         }
 
-        public void Purchase(int accountId, IEnumerable<ProductViewModel> selectedProducts)
+        public void Purchase(int accountId, IEnumerable<int> productIds, decimal total)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
-                var productIds = selectedProducts.Select(x => x.Id);
-                var products = uow.Repository<Product>().Query().Where(x => productIds.Contains(x.Id)).ToList();
-
-                var total = GetProductsTotal(products);
-                var discount = GetDiscount(accountId, total);
-                var totalAfterDiscount = GetTotalAfterDiscount(total, discount);
-
                 var account = uow.Repository<Account>().Get(accountId);
 
-                if (totalAfterDiscount > account.Balance)
+                if (total > account.Balance)
                     throw new PurchaseException(PurchaseError.NotEnoughMoney, "Not enough money!");
 
                 uow.Repository<Order>().Add(new Order { Account = account, Date = DateTime.Now, Total = total });
-                account.Balance -= total;
-                
+
+                var products = uow.Repository<Product>().Query().Where(x => productIds.Contains(x.Id)).ToList();
                 foreach (var product in products)
                 {
                     product.Amount--;

@@ -2,6 +2,7 @@
 {
     internal enum PurchaseError
     {
-        NotEnoughMoney
+        NotEnoughMoney,
+        NotEnoughAmount
     }
 }

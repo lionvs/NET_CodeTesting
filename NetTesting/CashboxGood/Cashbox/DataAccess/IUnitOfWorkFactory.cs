@@ -1,6 +1,6 @@
 ﻿namespace Cashbox.DataAccess
 {
-    internal interface IUnitOfWorkFactory
+    public interface IUnitOfWorkFactory
     {
         IUnitOfWork Create();
     }

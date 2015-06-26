@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using Cashbox.Framework;
@@ -139,11 +138,11 @@ namespace Cashbox.ViewModels
             ErrorMessage = null;
 
             var accountId = SelectedAccount.Id;
-            var selectedProducts = ((IEnumerable<object>)parameter).Cast<ProductViewModel>();
+            var productIds = ((IEnumerable<object>)parameter).Cast<ProductViewModel>().Select(x => x.Id);
 
             try
             {
-                _purchaseService.Purchase(accountId, selectedProducts);
+                _purchaseService.Purchase(accountId, productIds, TotalAfterDiscount);
             }
             catch (PurchaseException ex)
             {

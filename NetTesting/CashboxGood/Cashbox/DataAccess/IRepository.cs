@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Cashbox.DataAccess
 {
-    internal interface IRepository<T> where T : class, IEntity
+    public interface IRepository<T> where T : class, IEntity
     {
         IQueryable<T> Query();
         IEnumerable<T> All();

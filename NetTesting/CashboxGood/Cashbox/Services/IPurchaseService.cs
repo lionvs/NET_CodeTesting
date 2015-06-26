@@ -11,6 +11,6 @@ namespace Cashbox.Services
         decimal GetProductsTotal(IEnumerable<Product> products);
         decimal GetDiscount(int accountId, decimal productsTotal);
         decimal GetTotalAfterDiscount(decimal total, decimal discount);
-        void Purchase(int accountId, IEnumerable<ProductViewModel> selectedProducts);
+        void Purchase(int accountId, IEnumerable<int> productIds, decimal total);
     }
 }
