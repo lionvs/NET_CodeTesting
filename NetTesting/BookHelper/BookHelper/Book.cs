@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace BookHelper
 {
@@ -18,7 +19,7 @@ namespace BookHelper
             _readPages.Add(new PagesRange(from, to));
         }
 
-        public int HowManyPagesLeft()
+        public int HowManyPagesLeft2()
         {
             var readPages = 0;
             for (var page = 1; page <= PagesCount; page++)
@@ -34,6 +35,11 @@ namespace BookHelper
 
             var leftPages = PagesCount - readPages;
             return leftPages;
+        }
+
+        public int HowManyPagesLeft()
+        {
+            return PagesCount - _readPages.Sum(x => x.To - x.From);
         }
     }
 }

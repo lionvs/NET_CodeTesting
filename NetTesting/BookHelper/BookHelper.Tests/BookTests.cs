@@ -19,5 +19,7 @@ namespace BookHelper.Tests
             // Assert
             Assert.That(leftPages, Is.EqualTo(5));
         }
+
+        // TODO: Overlapped ranges?
     }
 }
