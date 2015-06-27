@@ -149,6 +149,7 @@ namespace Cashbox.ViewModels
                 ErrorMessage = ex.Message;
             }
 
+            // Refresh data in the grids and select the same account that was selected before.
             LoadAccountsCommand.Execute(null);
             SelectedAccount = Accounts.Single(x => x.Id == accountId);
             

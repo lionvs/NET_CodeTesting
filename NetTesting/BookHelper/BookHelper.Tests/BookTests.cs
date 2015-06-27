@@ -5,8 +5,6 @@ namespace BookHelper.Tests
     [TestFixture]
     public class BookTests
     {
-        https://www.youtube.com/watch?v=E4iMA-oh94s
-
         [Test]
         public void HowManyPagesLeft_When_given_few_read_ranges_Then_returns_correct_count_of_unread_pages()
         {
@@ -22,6 +20,6 @@ namespace BookHelper.Tests
             Assert.That(leftPages, Is.EqualTo(5));
         }
 
-        // TODO: Overlapped ranges?
+        // TODO: Write test that checks that HowManyPagesLeft() correctly counts pages when overlapped ranges are added. Fix the code if test fails.
     }
 }

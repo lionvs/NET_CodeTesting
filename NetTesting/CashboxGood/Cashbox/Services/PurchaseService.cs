@@ -23,6 +23,7 @@ namespace Cashbox.Services
 
         public decimal GetOrdersHistoryTotal(int accountId)
         {
+            // Calculate how much account has spent before.
             using (var uow = _unitOfWorkFactory.Create())
             {
                 return uow.Repository<Order>()
@@ -71,13 +72,17 @@ namespace Cashbox.Services
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
+                // Get account entity from the database in order to update it.
                 var account = uow.Repository<Account>().Get(accountId);
 
+                // Check that account has enough money to purchase the selected products.
                 if (total > account.Balance)
                     throw new PurchaseException(PurchaseError.NotEnoughMoney, "Not enough money!");
 
+                // Create an order.
                 uow.Repository<Order>().Add(new Order { Account = account, Date = DateTime.Now, Total = total });
 
+                // Update amount of each selected product.
                 var products = uow.Repository<Product>().Query().Where(x => productIds.Contains(x.Id)).ToList();
                 foreach (var product in products)
                 {

@@ -1,0 +1,14 @@
+1. Read the NUnit documentation about:
+   - TestFixture: http://www.nunit.org/index.php?p=testFixture&r=2.6.3
+   - Test: http://www.nunit.org/index.php?p=test&r=2.6.3
+   - SetupFixture: http://www.nunit.org/index.php?p=setupFixture&r=2.6.3
+   - Setup: http://www.nunit.org/index.php?p=setup&r=2.6.3
+   - TearDown: http://www.nunit.org/index.php?p=teardown&r=2.6.3
+   - TestCase: http://www.nunit.org/index.php?p=testCase&r=2.6.3
+   - Ignore: http://www.nunit.org/index.php?p=ignore&r=2.6.3
+   - ExpectedException: http://www.nunit.org/index.php?p=exception&r=2.6.3
+   - Constraint-Based Assert Model: http://www.nunit.org/index.php?p=constraintModel&r=2.6.3
+
+2. Investigate BookHelper project. Follow the TODO comments. You can see the full list of TODO comments by opening Menu -> View -> Task List -> Select Comments.
+
+3. Compare CashboxBad and CashboxGood projects. Follow the TODO comments.
