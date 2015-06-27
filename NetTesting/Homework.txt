@@ -9,6 +9,9 @@
    - ExpectedException: http://www.nunit.org/index.php?p=exception&r=2.6.3
    - Constraint-Based Assert Model: http://www.nunit.org/index.php?p=constraintModel&r=2.6.3
 
-2. Investigate BookHelper project. Follow the TODO comments. You can see the full list of TODO comments by opening Menu -> View -> Task List -> Select Comments.
+2. Investigate BookHelper project. Follow the TODO comments. You can see the full list of TODO comments
+   by opening Menu -> View -> Task List -> Select Comments.
 
 3. Compare CashboxBad and CashboxGood projects. Follow the TODO comments.
+
+Pay attention to the README files inside the projects.
