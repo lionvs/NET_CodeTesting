@@ -7,36 +7,36 @@ namespace Cashbox.Tests.Fake
 {
     public class FakeRepository<T> : IRepository<T> where T : class, IEntity
     {
-        private readonly IList<T> _data;
+        public readonly List<T> Data;
 
         public FakeRepository(params T[] data)
         {
-            _data = data;
+            Data = new List<T>(data);
         }
 
         public IQueryable<T> Query()
         {
-            return _data.AsQueryable();
+            return Data.AsQueryable();
         }
 
         public IEnumerable<T> All()
         {
-            return _data;
+            return Data;
         }
 
         public T Get(int id)
         {
-            return _data.FirstOrDefault(x => x.Id == id);
+            return Data.FirstOrDefault(x => x.Id == id);
         }
 
         public T Get(Func<T, bool> predicate)
         {
-            return _data.FirstOrDefault(predicate);
+            return Data.FirstOrDefault(predicate);
         }
 
         public void Add(T entity)
         {
-            _data.Add(entity);
+            Data.Add(entity);
         }
 
         public void Attach(T entity)
@@ -45,7 +45,7 @@ namespace Cashbox.Tests.Fake
 
         public void Delete(T entity)
         {
-            _data.Remove(entity);
+            Data.Remove(entity);
         }
     }
 }
