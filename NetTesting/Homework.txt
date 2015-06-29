@@ -7,7 +7,11 @@
 
 3. Compare CashboxBad and CashboxGood projects. Follow the TODO comments.
 
+4. Try to write 1-2 tests using the SpecFlow.
+
 Pay attention to the README files inside the projects.
+
+
 
 To install OpenCover:
 1. Install OpenCover from https://github.com/opencover/opencover/releases
