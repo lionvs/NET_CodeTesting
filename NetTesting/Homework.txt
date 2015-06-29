@@ -8,3 +8,8 @@
 3. Compare CashboxBad and CashboxGood projects. Follow the TODO comments.
 
 Pay attention to the README files inside the projects.
+
+To install OpenCover:
+1. Install OpenCover from https://github.com/opencover/opencover/releases
+2. Install Visual Studio UI plugin from https://visualstudiogallery.msdn.microsoft.com/6950a046-8919-4935-8542-c6f37956f688
+3. Install NUnit from http://www.nunit.org/index.php?p=download
