@@ -16,6 +16,6 @@ namespace BookHelper.Tests
             new PagesRange(from, to);
         }
 
-        // TODO: Write test that checks that "from" should be less or equal than "to". Fix the code if test fails.
+        // TODO 1: Write test that checks that "from" should be less or equal than "to". Fix the code if test fails.
     }
 }

@@ -20,6 +20,6 @@ namespace BookHelper.Tests
             Assert.That(leftPages, Is.EqualTo(5));
         }
 
-        // TODO: Write test that checks that HowManyPagesLeft() correctly counts pages when overlapped ranges are added. Fix the code if test fails.
+        // TODO 2: Write test that checks that HowManyPagesLeft() correctly counts pages when overlapped ranges are added. Fix the code if test fails.
     }
 }

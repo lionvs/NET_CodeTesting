@@ -20,7 +20,7 @@ namespace BookHelper
 
         public int HowManyPagesLeft()
         {
-            // TODO: Improve code here.
+            // TODO 3: Improve/fix the code here.
             var readPages = 0;
             for (var page = 1; page <= PagesCount; page++)
             {

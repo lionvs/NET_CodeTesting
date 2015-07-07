@@ -85,9 +85,9 @@ namespace Cashbox.Tests.Services
             Assert.That(discount, Is.EqualTo(PurchaseService.ORDERS_HISTORY_DISCOUNT));
         }
 
-        // TODO: Write test to check that account can get 5% discount (for the selected expensive products).
+        // TODO 4: Write test to check that account can get 5% discount (for the selected expensive products). Fix code if test fails.
 
-        // TODO: Write test to check that account can get 15% discount (10% + 5%, for previous orders and for selected products).
+        // TODO 5: Write test to check that account can get 15% discount (10% + 5%, for previous orders and for selected products). Fix code if test fails.
 
         [Test]
         public void Purchase_When_not_enough_balance_Then_throw_exception()
@@ -164,8 +164,8 @@ namespace Cashbox.Tests.Services
             A.CallTo(() => unitOfWork.SaveChanges()).MustHaveHappened(Repeated.Exactly.Once);
         }
 
-        // TODO: Write test to check that account balance is correctly updated after purchase.
+        // TODO 6: Write test to check that account balance is correctly updated after purchase. Fix code if test fails.
 
-        // TODO: Write test to check that account can't buy product if it's amount is 0. Purchase should throw an exception.
+        // TODO 7: Write test to check that account can't buy product if it's amount is 0. Purchase should throw an exception. Fix code if test fails.
     }
 }
