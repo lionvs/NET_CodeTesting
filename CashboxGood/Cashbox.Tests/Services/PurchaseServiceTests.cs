@@ -87,7 +87,33 @@ namespace Cashbox.Tests.Services
 
         // TODO 4: Write test to check that account can get 5% discount (for the selected expensive products). Fix code if test fails.
 
+        [Test]
+        public void GetDiscount_When_account_selected_expensive_product_Then_expensive_products_discount()
+        {
+            // Arrange
+            var service = new PurchaseService(_fakeUnitOfWorkFactory);
+
+            // Act
+            var discount = service.GetDiscount(131, 201.5m);
+
+            // Assert
+            Assert.That(discount, Is.EqualTo(PurchaseService.EXPENSIVE_PRODUCTS_DISCOUNT));
+        }
+
         // TODO 5: Write test to check that account can get 15% discount (10% + 5%, for previous orders and for selected products). Fix code if test fails.
+
+        [Test]
+        public void GetDiscount_When_account_has_enough_orders_and_selected_expensive_product_Then_expensive_products_discount()
+        {
+            // Arrange
+            var service = new PurchaseService(_fakeUnitOfWorkFactory);
+
+            // Act
+            var discount = service.GetDiscount(1, 201.5m);
+
+            // Assert
+            Assert.That(discount, Is.EqualTo(PurchaseService.EXPENSIVE_PRODUCTS_DISCOUNT + PurchaseService.ORDERS_HISTORY_DISCOUNT));
+        }
 
         [Test]
         public void Purchase_When_not_enough_balance_Then_throw_exception()
@@ -166,6 +192,63 @@ namespace Cashbox.Tests.Services
 
         // TODO 6: Write test to check that account balance is correctly updated after purchase. Fix code if test fails.
 
+        [Test]
+        public void Purchase_When_purchase_products_Then_account_balance_is_correctly_updated()
+        {
+            // Arrange
+            var product1 = new Product { Id = 1, Price = 1, Amount = 1 };
+
+            var productRepository = A.Fake<IRepository<Product>>();
+            A.CallTo(() => productRepository.Query()).Returns(new[] { product1 }.AsQueryable());
+
+            var account = new Account { Id = 1, Balance = 1 };
+
+            var accountRepository = A.Fake<IRepository<Account>>();
+            A.CallTo(() => accountRepository.Get(A<int>._)).Returns(account);
+
+            var unitOfWork = A.Fake<IUnitOfWork>();
+            A.CallTo(() => unitOfWork.Repository<Product>()).Returns(productRepository);
+            A.CallTo(() => unitOfWork.Repository<Account>()).Returns(accountRepository);
+
+            var unitOfWorkFactory = A.Fake<IUnitOfWorkFactory>();
+            A.CallTo(() => unitOfWorkFactory.Create()).Returns(unitOfWork);
+
+            var service = new PurchaseService(unitOfWorkFactory);
+
+            // Act
+            service.Purchase(account.Id, new[] { product1.Id }, product1.Price);
+
+            // Assert
+            Assert.That(account.Balance, Is.EqualTo(0m));
+        }
+
         // TODO 7: Write test to check that account can't buy product if it's amount is 0. Purchase should throw an exception. Fix code if test fails.
+
+        [Test]
+        public void Purchase_When_purchase_products_with_amount_0_Then_throw_argument_exception()
+        {
+            // Arrange
+            var product1 = new Product { Id = 1, Price = 1, Amount = 0 };
+
+            var productRepository = A.Fake<IRepository<Product>>();
+            A.CallTo(() => productRepository.Query()).Returns(new[] { product1 }.AsQueryable());
+
+            var account = new Account { Id = 1, Balance = 1 };
+
+            var accountRepository = A.Fake<IRepository<Account>>();
+            A.CallTo(() => accountRepository.Get(A<int>._)).Returns(account);
+
+            var unitOfWork = A.Fake<IUnitOfWork>();
+            A.CallTo(() => unitOfWork.Repository<Product>()).Returns(productRepository);
+            A.CallTo(() => unitOfWork.Repository<Account>()).Returns(accountRepository);
+
+            var unitOfWorkFactory = A.Fake<IUnitOfWorkFactory>();
+            A.CallTo(() => unitOfWorkFactory.Create()).Returns(unitOfWork);
+
+            var service = new PurchaseService(unitOfWorkFactory);
+
+            // Act and Assert
+            Assert.Throws<ArgumentException>(() => service.Purchase(account.Id, new[] { product1.Id }, product1.Price));
+        }
     }
 }

@@ -17,5 +17,14 @@ namespace BookHelper.Tests
         }
 
         // TODO 1: Write test that checks that "from" should be less or equal than "to". Fix the code if test fails.
+        [Test]
+        [TestCase(3, 2)] // Documentation about TestCase attribute: http://www.nunit.org/index.php?p=testCase&r=2.5
+        [ExpectedException(typeof(ArgumentException))]
+        public void Ctr_When_From_greater_To_Then_throws_exception(int from, int to)
+        {
+            // Act
+            new PagesRange(from, to);
+        }
+
     }
 }

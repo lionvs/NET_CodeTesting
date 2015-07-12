@@ -15,6 +15,9 @@ namespace BookHelper
             if (to < 0)
                 throw new ArgumentException("Page number can't be negative.", "to");
 
+            if(from > to)
+                throw new ArgumentException("Page number 'from' can't be greater that page number 'to'.");
+
             From = from;
             To = to;
         }
